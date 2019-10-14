@@ -159,7 +159,15 @@ class MP4Remuxer {
         initSegment: MP4.initSegment([videoTrack]),
         metadata: {
           width: videoTrack.width,
-          height: videoTrack.height
+          height: videoTrack.height,
+		  // Sample Aspect Ratio
+		  sar: videoTrack.pixelRatio
+		    ? videoTrack.pixelRatio[0] / videoTrack.pixelRatio[1]
+		    : null,
+          // Display Aspect Ratio
+          dar: (videoTrack.pixelRatio && videoTrack.width && videoTrack.height)
+		    ? videoTrack.width * videoTrack.pixelRatio[0] / (videoTrack.height * videoTrack.pixelRatio[1])
+		    : null
         }
       };
       if (computePTSDTS) {
